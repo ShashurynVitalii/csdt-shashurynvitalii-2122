@@ -1,13 +1,13 @@
-# cstd-shashurynvitalii-2122
+# csdt-shashurynvitalii-2122
 Group - KI-48
 
 Student - Shashuryn Vitalii
 
-Subject - CSTD
+Subject - CSDT
 
 Game - Sea Battle
 
-HW i-face - UART
+HW i-face - I2C
 
 Data driven format - XML
 
@@ -45,6 +45,8 @@ The proposal for data driven approach: configuration (saved in configuration fil
 
 ∙ tool size;
 
-∙ win statement;∙ lose statement;
+∙ win statement;
+
+∙ lose statement;
 
 ∙ AI parameters
