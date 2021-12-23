@@ -3,6 +3,7 @@ from automatic_player import *
 from visible_board import *
 from person_player import *
 from stats import *
+from server.serial_connection import *
 import time
 import random
 
@@ -46,6 +47,7 @@ class Start(pygame.sprite.Sprite):
         )
         self.p_ships = p_ships
         self.guesses = 0
+        self.server_data = ""
 
     def set_auto_ships(self):
         ships = self.auto.set_battleships()
@@ -77,6 +79,7 @@ class Start(pygame.sprite.Sprite):
         is chosen only once.
         """
         pos = self.auto.guess_location()
+        send_serial_data(pos)
         no_go = self.update(self.vb_player, pos[0], pos[1])
         if no_go == None:
             no_go = []
@@ -393,7 +396,18 @@ if __name__ == "__main__":
 
     running = True
     while running:
-        # events handler
+        while True:
+            try:
+                start.server_data = get_serial_data(
+                    SERVER_ROOT["start"], SERVER_ROOT["end"], start.server_data
+                )
+                break
+            except Exception as e:
+                if str(e)[:14] == "ClearCommError":
+                    pygame.quit()
+                    print("Can't find port")
+                    sys.exit()
+                continue
         for event in pygame.event.get():
             start.display_score()
             start.display_stats()
@@ -401,9 +415,10 @@ if __name__ == "__main__":
                 start.quit()
             elif event.type == pygame.constants.USEREVENT:
                 pass
-            if win == 0:
+            if win == 0 and start.server_data == "GAME_UPDATE":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
+                    send_serial_data(mouse_pos)
                     if start.turns == 0:
                         m_event = mouse_event(mouse_pos, start)
                         if start.vb_auto.all_ships_sunk():
@@ -477,4 +492,4 @@ if __name__ == "__main__":
                         )
 
         pygame.display.flip()
-        clock.tick(FPS)  # set limit of fps to 30 frame/sec
+        clock.tick(FPS)

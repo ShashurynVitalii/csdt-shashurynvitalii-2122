@@ -28,14 +28,15 @@ your turn click left mouse button one more time to let computer oponent perform 
 ## Instalation and run
 
 In order to run the game you firstly will need to install [Python](https://www.python.org/downloads/)\
-Project was build on Python 3.9, so you can just use the same. After that go to SeaBattleGame directory.\
-There you will see two important files:
+Project was build on Python 3.9, so you can just use the same. Also while installing Python make sure\
+that you checked boxes with **pip** instalation and addition Python to PATH. After that go to SeaBattleGame\
+directory. There you will see two important files:
 ```
 Pipfile
 Pipfile.lock
 ```
-Those two files contain all info about needed packages and dependencies. In order to use them you need to \
-use the following commands:
+Those two files contain all info about needed packages and dependencies. In order to use them first install\
+**pipenv** with `pip install pipenv` command, after that you need to use the following commands:
 ```
 pipenv shell
 pipenv install
@@ -49,4 +50,4 @@ After all that use the following command in order to run the game:
 python controller.py
 ```
 ###### Version
-- 1.0
+![version](https://img.shields.io/badge/version-1.0-informational) 
