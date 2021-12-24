@@ -4,22 +4,25 @@ from visible_board import *
 from person_player import *
 from stats import *
 from client.serial_connection import *
+from util import *
 import time
 import random
 
-FPS = 30
-HEIGHT = 1000
-WIDTH = 500
-BORDER_WIDTH = 235
-BORDER_HEIGHT = 35
-REQ_SHIP_SIZE = 40
-MAX_SCORE = 5
-MOUSE_POS_X = 430
-MOUSE_POS_Y = 130
-RESTRICT_X = 775
-RESTRICT_Y = 475
-MARGIN = 5
-SIZE = 30
+config, PLAYER_NAME = read_config_xml("config.xml")
+
+FPS = config[0]
+HEIGHT = config[1]
+WIDTH = config[2]
+BORDER_WIDTH = config[3]
+BORDER_HEIGHT = config[4]
+REQ_SHIP_SIZE = config[5]
+MAX_SCORE = config[6]
+MOUSE_POS_X = config[7]
+MOUSE_POS_Y = config[8]
+RESTRICT_X = config[9]
+RESTRICT_Y = config[10]
+MARGIN = config[11]
+SIZE = config[12]
 P_SHIPS = []
 
 
@@ -104,7 +107,7 @@ class Start(pygame.sprite.Sprite):
 
     def display_score(self):
         font = pygame.font.SysFont("'couriernew'", 19)
-        mess_1 = "Player score: "
+        mess_1 = f"{PLAYER_NAME} score: "
         mess_2 = "Computer score: "
         mess_3 = str(self.player1_score)
         mess_4 = str(self.player2_score)
@@ -133,13 +136,15 @@ class Start(pygame.sprite.Sprite):
         txt3 = font.render(mess_3, False, (0, 127, 0))
         txt4 = font.render(mess_4, False, (0, 127, 0))
         play_score_msg1 = font.render(
-            "Player - {}".format(MAX_SCORE), False, (0, 127, 0)
+            "{} - {}".format(PLAYER_NAME, MAX_SCORE), False, (0, 127, 0)
         )
         play_score_msg2 = font.render(
             "Computer - {}".format(MAX_SCORE), False, (0, 127, 0)
         )
         play_score_msg3 = font.render(
-            "Player - {}".format(MAX_SCORE - self.player2_score), False, (0, 127, 0)
+            "{} - {}".format(PLAYER_NAME, MAX_SCORE - self.player2_score),
+            False,
+            (0, 127, 0),
         )
         play_score_msg4 = font.render(
             "Computer - {}".format(MAX_SCORE - self.player1_score), False, (0, 127, 0)
@@ -376,6 +381,8 @@ if __name__ == "__main__":
     run_menu()
     run_preparation()
 
+    start_time = time.process_time()
+
     pygame.init()
     pygame.mixer.init()
     clock = pygame.time.Clock()
@@ -436,11 +443,21 @@ if __name__ == "__main__":
                             start.display_stats()
                             title = pygame.font.SysFont("'couriernew'", 40)
                             title.set_bold(True)
-                            main_title = title.render("Player wins!", True, (0, 128, 0))
+                            main_title = title.render(
+                                f"{PLAYER_NAME} wins!", True, (0, 128, 0)
+                            )
                             main_board.blit(main_title, (250, 40))
                             start.display_score()
                             start.display_stats()
                             win = 1
+                            end_time = time.process_time()
+                            write_results_xml(
+                                f"{PLAYER_NAME}",
+                                f"{end_time - start_time:.2f}",
+                                f"{start.guesses}",
+                                f"{start.player1_score}",
+                                f"{start.player2_score}",
+                            )
                         pygame.draw.rect(
                             start.vboard, BLACK, pygame.Rect(960, 300, 40, 40)
                         )
@@ -471,6 +488,14 @@ if __name__ == "__main__":
                             start.display_score()
                             start.display_stats()
                             win = 1
+                            end_time = time.process_time()
+                            write_results_xml(
+                                "Computer",
+                                f"{end_time - start_time:.2f}",
+                                f"{start.guesses}",
+                                f"{start.player1_score}",
+                                f"{start.player2_score}",
+                            )
                         pygame.draw.rect(
                             start.vboard, BLACK, pygame.Rect(960, 300, 40, 40)
                         )

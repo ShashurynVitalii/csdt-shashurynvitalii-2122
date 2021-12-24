@@ -1,0 +1,18 @@
+<data>
+	<config>
+		<item name="FPS">30</item>
+		<item name="HEIGHT">1000</item>
+		<item name="WIDTH">500</item>
+		<item name="BORDER_WIDTH">235</item>
+		<item name="BORDER_HEIGHT">35</item>
+		<item name="REQ_SHIP_SIZE">40</item>
+		<item name="MAX_SCORE">5</item>
+		<item name="MOUSE_POS_X">430</item>
+		<item name="MOUSE_POS_Y">130</item>
+		<item name="RESTRICT_X">775</item>
+		<item name="RESTRICT_Y">475</item>
+		<item name="MARGIN">5</item>
+		<item name="SIZE">30</item>
+		<item name="PLAYER_NAME">Vitalii</item>
+	</config>
+</data>
