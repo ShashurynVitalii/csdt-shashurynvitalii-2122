@@ -19,7 +19,7 @@ but in this particular realization hitting only one single cell of the ship will
 ###### Controls
 
 - To place ships you only need to use your mouse (left click). Order of the ships to place match the
-one shown on the game preparation screen (from top to bottom). After placing your ships just press any 
+one shown on the game preparation screen (from top to bottom). After placing your ships just press any
 key (as it said on the screen) to start the game.
 - To hit cell on the board also use your mouse (player board is placed on the right). Be aware: after
 your turn click left mouse button one more time to let computer oponent perform it's move
@@ -49,5 +49,10 @@ After all that use the following command in order to run the game:
 ```
 python controller.py
 ```
+###### Tests
+To run tests manually in SeaBattleGame folder run next command: `python -m unittest discover -v`. Test automation\
+was performed with **pre-commit** package, which uses git hooks. There is one custom hook to run tests, and several\
+other hooks for code formatting (black, end-of-file-fixer, trailing-whitespace)
+
 ###### Version
-![version](https://img.shields.io/badge/version-1.0-informational) 
+![version](https://img.shields.io/badge/version-1.1-informational)

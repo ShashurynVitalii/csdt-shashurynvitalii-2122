@@ -6,11 +6,11 @@ class PersonPlayer(Player):
         super().__init__()
 
     def set_battleship(self, x_head, y_head, battleship_length):
-        """ 
-        Plots one of PersonPlayer's battleship with size: 
+        """
+        Plots one of PersonPlayer's battleship with size:
         length starting at coordinate (x_head, y_head).
 
-        Adds a list of 5 elements to the placements list. 
+        Adds a list of 5 elements to the placements list.
         Each element represents the battleship using the format:
         (start_x, start_y, end_x, end_y, size)
         """

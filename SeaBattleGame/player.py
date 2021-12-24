@@ -5,7 +5,7 @@ class Player:
     """Represents any player that can play the game."""
 
     def __init__(self):
-        """ 
+        """
         Initializes the Player class.
         """
         self.score = []  # Keeps track of the battleships that have been hit.
@@ -43,8 +43,8 @@ class Player:
             self.selection_history.append(plot)
 
     def valid_location(self, grid, x, y, ship_len, ship_orientation):
-        """ 
-        Determines whether ship with length ship_len and orientation 
+        """
+        Determines whether ship with length ship_len and orientation
         ship_orientation can be placed in grid at x,y.
         Input variables:
             grid: A double array that represents the board
@@ -66,7 +66,7 @@ class Player:
 
     def update_internal_board(self, grid, x, y, ship_len, ship_orientation):
         """
-        Once determined that the location is valid, we will update grid 
+        Once determined that the location is valid, we will update grid
         to contain newly placed battleship.
         Input variable:
             grid: A double array that represents the board

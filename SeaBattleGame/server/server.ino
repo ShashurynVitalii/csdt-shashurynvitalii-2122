@@ -10,7 +10,7 @@ int colDataPin = 10;  int rowClockPin = 19;
 int rowLatchPin = 18;
 int rowDataPin = 17;
 byte ledStates[8] = {B01110000, B11111000, B11111100, B01111110, B01111110, B11111100, B11111000, B01110000};
-byte GroundLEDs [8] = {B01111111, B10111111, B11011111, B11101111, B11110111, B11111011, B11111101, B11111110}; 
+byte GroundLEDs [8] = {B01111111, B10111111, B11011111, B11101111, B11110111, B11111011, B11111101, B11111110};
 
 int enemyBoard[8][8];
 int spotsBombed[8][8];
@@ -25,13 +25,13 @@ void setup() {
   pinMode(rowLatchPin, OUTPUT);
   pinMode(rowClockPin, OUTPUT);
   pinMode(rowDataPin, OUTPUT);
-  
+
   pinMode(colLatchPin, OUTPUT);
   pinMode(colClockPin, OUTPUT);
-  pinMode(colDataPin, OUTPUT);      
-  
+  pinMode(colDataPin, OUTPUT);
+
   digitalWrite(colLatchPin, LOW);
-  shiftOut(colDataPin, colClockPin, MSBFIRST, B11111111);  
+  shiftOut(colDataPin, colClockPin, MSBFIRST, B11111111);
   digitalWrite(colLatchPin, HIGH);
 
   for (int i = 0; i < 8; i++) {
@@ -52,7 +52,7 @@ void setup() {
 }
 
 void loop() {
-  
+
   bool validInput = false;
   int col;
   int row;
@@ -99,24 +99,24 @@ void loop() {
 }
 
 void GroundCorrectLED (byte states){
-  
+
     digitalWrite(colLatchPin, LOW);
-    shiftOut(colDataPin, colClockPin, MSBFIRST, states);  
+    shiftOut(colDataPin, colClockPin, MSBFIRST, states);
     digitalWrite(colLatchPin, HIGH);
-    
+
 }
 void SetStates (byte statesx){
-       
+
     digitalWrite(rowLatchPin, LOW);
-    shiftOut(rowDataPin, rowClockPin, LSBFIRST, statesx);  
+    shiftOut(rowDataPin, rowClockPin, LSBFIRST, statesx);
     digitalWrite(rowLatchPin, HIGH);
-    
+
 }
 
 void printStringScrolling(String myString) {
   int start = 0;
   int last = 0;
-  
+
   for (int i = 0; i < myString.length()+16; i ++) {
     lcd.clear();
     lcd.print(myString.substring(start,last));
@@ -151,7 +151,7 @@ int indefButtonPress () {
   while (true) {
     int currYellowState = digitalRead(yellowButtonPin);
     int currRedState = digitalRead(redButtonPin);
-    
+
     if (currYellowState != yellowOldState && currYellowState == LOW){
       return yellowButtonPin;
     }
@@ -169,26 +169,26 @@ int setBoatHorizontally(int orientation, int boatLength) {
   int currCol;
   int tempBoard[8][8];
   if (orientation == 1) { //horizontal
-    
+
     int boat[boatLength];
     for (int i = 0; i < boatLength; i++)
       boat[i] = i;
-  
+
     currCol= 0;
-    
+
     while (1) {
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
           tempBoard[i][j] = playerBoard[i][j];
         }
       }
-  
+
       for (int i = 0; i < boatLength; i++)
         tempBoard[0][boat[i]] = 1;
-      
+
       printBoardOnLEDMatrix(tempBoard);
       int buttonPressed = timedButtonPress();
-      
+
       if (buttonPressed == yellowButtonPin){
         return currCol;
       }
@@ -203,21 +203,21 @@ int setBoatHorizontally(int orientation, int boatLength) {
             tempBoard[0][currCol + i] = 1;
         }
       }
-    } 
+    }
   }
   else if (orientation == 2) { //vertically
     currCol= 0;
-    
+
     while (1) {
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
           tempBoard[i][j] = playerBoard[i][j];
         }
       }
-  
+
       for (int i = 0; i < boatLength; i++)
         tempBoard[i][currCol] = 1;
-      
+
       printBoardOnLEDMatrix(tempBoard);
       int buttonPress = timedButtonPress();
       if (buttonPress == yellowButtonPin){
@@ -241,19 +241,19 @@ int setBoatHorizontally(int orientation, int boatLength) {
 
 void printBoardOnLEDMatrix(int tempBoard[8][8]) {
   for (int z = 0; z <5; z++) {
-    for(int i=0;i<8;i++){  
-        
+    for(int i=0;i<8;i++){
+
       byte data = B0;
       for (int j = 0; j < 8; j++) {
         bitWrite(data, j, tempBoard[j][i]);
       }
       SetStates(data);
-      GroundCorrectLED (GroundLEDs[i]);  
-      
+      GroundCorrectLED (GroundLEDs[i]);
+
       delay(1);
-      
+
       digitalWrite(colLatchPin, LOW);
-      shiftOut(colDataPin, colClockPin, MSBFIRST, B11111111);  
+      shiftOut(colDataPin, colClockPin, MSBFIRST, B11111111);
       digitalWrite(colLatchPin, HIGH);
 
       delay(1);
@@ -267,7 +267,7 @@ int timedButtonPress () {
   for (int i = 0; i < 300; i++) {
     int currYellowState = digitalRead(yellowButtonPin);
     int currRedState = digitalRead(redButtonPin);
-      
+
     if (currYellowState != yellowOldState && currYellowState == LOW){
       return yellowButtonPin;
     }
@@ -285,27 +285,27 @@ void setBoatVertically(int orientation, int boatLength, int boatCol) {
   bool done;
   int currRow;
   int tempBoard[8][8];
-  
+
   if (orientation == 2) { //vertical
     int boat[boatLength];
     for (int i = 0; i < boatLength; i++) {
       boat[i] = i;
     }
-  
+
     done = false;
     currRow = 0;
-    
+
     while (!done) {
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
           tempBoard[i][j] = playerBoard[i][j];
         }
       }
-  
-      for (int i = 0; i < boatLength; i++) 
+
+      for (int i = 0; i < boatLength; i++)
         tempBoard[boat[i]][boatCol] = 1;
-     
-      
+
+
       printBoardOnLEDMatrix(tempBoard);
 
       int buttonPressed = timedButtonPress();
@@ -344,19 +344,19 @@ void setBoatVertically(int orientation, int boatLength, int boatCol) {
   else if (orientation == 1) { // horizontal
     done = false;
     currRow = 0;
-    
+
     while (!done) {
-  
+
       for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
           tempBoard[i][j] = playerBoard[i][j];
         }
       }
-  
+
       for (int i = 0; i < boatLength; i++) {
         tempBoard[currRow][boatCol + i] = 1;
       }
-      
+
       printBoardOnLEDMatrix(tempBoard);
       int buttonPressed = timedButtonPress();
       if (buttonPressed == yellowButtonPin){
@@ -400,11 +400,11 @@ int getBombCol() {
       tempBoard[i][j] = spotsBombed[i][j];
     }
   }
-  
+
   while (!done) {
     prevVal = spotsBombed[0][bombCol];
     tempBoard[0][bombCol] = 1;
-      
+
     printBoardOnLEDMatrix(tempBoard);
     int buttonPressed = timedButtonPress();
     if (buttonPressed == yellowButtonPin){
@@ -425,18 +425,18 @@ int getBombRow(int bombCol) {
   int bombRow = 0;
   bool done = false;
   int prevVal;
-    
+
   int tempBoard[8][8];
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
       tempBoard[i][j] = spotsBombed[i][j];
     }
   }
-  
+
   while (!done) {
     prevVal = spotsBombed[bombRow][bombCol];
     tempBoard[bombRow][bombCol] = 1;
-      
+
     printBoardOnLEDMatrix(tempBoard);
     int buttonPressed = timedButtonPress();
     if (buttonPressed == yellowButtonPin){
@@ -453,13 +453,13 @@ int getBombRow(int bombCol) {
 }
 
 void communicateBoards() {
-  
+
   byte boardToSend[8];
   for (int i = 0; i < 8; i++)
   {
     boardToSend[i] = getRowAsBytes(i);
   }
-  
+
   Serial.write(boardToSend, 8);
 
   printStringStatic("WAITING FOR", "OPPONENT");
@@ -483,7 +483,7 @@ void communicateBoards() {
       enemyBoard[i][j] = x;
     }
   }
-  
+
   printStringStatic("BOARD SETUP","COMPLETE");
   delay(3000);
   lcd.clear();
