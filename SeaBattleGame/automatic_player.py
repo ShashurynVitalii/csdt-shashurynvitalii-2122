@@ -3,7 +3,7 @@ from player import Player
 
 
 class AutomaticPlayer(Player):
-    """ 
+    """
     AutomaticPlayer represents the computer that an actual \
     user will play against.
     """
@@ -20,8 +20,8 @@ class AutomaticPlayer(Player):
                 return (x, y)
 
     def set_battleships(self):
-        """ 
-        Plots all of AutomaticPlayer's 
+        """
+        Plots all of AutomaticPlayer's
         battleship. Should only be called once.
         Will plot the following ships:
         1. Battleship length: 5
@@ -30,7 +30,7 @@ class AutomaticPlayer(Player):
         4. Battleship length: 2
         5. Battleship length: 1
 
-        It updates the object variable battleship_set, 
+        It updates the object variable battleship_set,
         which is a list of 5 elements.
         Each element represents the battleship \
         using the format:

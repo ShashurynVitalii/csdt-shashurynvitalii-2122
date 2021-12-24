@@ -24,7 +24,7 @@ P_SHIPS = []
 
 
 class Start(pygame.sprite.Sprite):
-    """ 
+    """
     Start(controller) utilizes all the\
     object classes of the game.
     NOTE: This follows the MVC architecture design protocols
@@ -120,9 +120,7 @@ class Start(pygame.sprite.Sprite):
         self.vboard.blit(txt4, (300, 100))
 
     def set_border(self):
-        pygame.draw.rect(
-            self.vboard, BLUE, pygame.Rect(35, 10, 745, 465), 3,
-        )
+        pygame.draw.rect(self.vboard, BLUE, pygame.Rect(35, 10, 745, 465), 3)
 
     def display_stats(self):
         font = pygame.font.SysFont("'couriernew'", 19)
@@ -138,13 +136,13 @@ class Start(pygame.sprite.Sprite):
             "Player - {}".format(MAX_SCORE), False, (0, 127, 0)
         )
         play_score_msg2 = font.render(
-            "Computer - {}".format(MAX_SCORE), False, (0, 127, 0),
+            "Computer - {}".format(MAX_SCORE), False, (0, 127, 0)
         )
         play_score_msg3 = font.render(
-            "Player - {}".format(MAX_SCORE - self.player2_score), False, (0, 127, 0),
+            "Player - {}".format(MAX_SCORE - self.player2_score), False, (0, 127, 0)
         )
         play_score_msg4 = font.render(
-            "Computer - {}".format(MAX_SCORE - self.player1_score), False, (0, 127, 0),
+            "Computer - {}".format(MAX_SCORE - self.player1_score), False, (0, 127, 0)
         )
         self.vboard.blit(txt1, (790, 100))
         self.vboard.blit(txt2, (790, 200))
