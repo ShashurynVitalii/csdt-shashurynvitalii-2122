@@ -3,7 +3,7 @@ from automatic_player import *
 from visible_board import *
 from person_player import *
 from stats import *
-from server.serial_connection import *
+from client.serial_connection import *
 import time
 import random
 
