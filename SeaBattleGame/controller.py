@@ -7,6 +7,7 @@ from client.serial_connection import *
 from util import *
 import time
 import random
+import queue
 
 config, PLAYER_NAME = read_config_xml("config.xml")
 
@@ -37,6 +38,7 @@ class Start(pygame.sprite.Sprite):
     def __init__(self, auto, person, stats, vboard, vb_auto, vb_player, p_ships):
         super(Start, self).__init__()
         self.auto = auto
+        self.ai_hunt_queue = queue.Queue()
         self.stats = stats
         self.person = person
         self.vboard = vboard
@@ -78,17 +80,29 @@ class Start(pygame.sprite.Sprite):
         """
         Let's the computer player
         to be able to guess the human player's ship
-        at valid positions, ensuring the same coordinates
-        is chosen only once.
+        with use of Hunt algorithm
         """
-        pos = self.auto.guess_location()
+        pos = ()
+        if self.ai_hunt_queue.empty():
+            pos = self.auto.guess_location()
+        else:
+            pos = self.ai_hunt_queue.get()
         send_serial_data(pos)
-        no_go = self.update(self.vb_player, pos[0], pos[1])
-        if no_go == None:
-            no_go = []
-        if no_go != []:
-            self.player2_score = self.player2_score + 1
-        self.auto.avoid_plots(no_go)
+        if (0 <= pos[0] <= 9) and (0 <= pos[1] <= 9):
+            no_go = self.update(self.vb_player, pos[0], pos[1])
+            if no_go == None:
+                no_go = []
+            if no_go != []:
+                self.player2_score = self.player2_score + 1
+                if self.vb_player.status[pos[0] + 1][pos[1]] == 0:
+                    self.ai_hunt_queue.put((pos[0] + 1, pos[1]))
+                if self.vb_player.status[pos[0] - 1][pos[1]] == 0:
+                    self.ai_hunt_queue.put((pos[0] - 1, pos[1]))
+                if self.vb_player.status[pos[0]][pos[1] + 1] == 0:
+                    self.ai_hunt_queue.put((pos[0], pos[1] + 1))
+                if self.vb_player.status[pos[0]][pos[1] - 1] == 0:
+                    self.ai_hunt_queue.put((pos[0], pos[1] - 1))
+            self.auto.avoid_plots(no_go)
 
     def update(self, obj, coord_x, coord_y):
         """
