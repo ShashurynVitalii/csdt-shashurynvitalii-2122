@@ -55,4 +55,4 @@ was performed with **pre-commit** package, which uses git hooks. There is one cu
 other hooks for code formatting (black, end-of-file-fixer, trailing-whitespace)
 
 ###### Version
-![version](https://img.shields.io/badge/version-1.2-informational)
+![version](https://img.shields.io/badge/version-1.4-informational)
