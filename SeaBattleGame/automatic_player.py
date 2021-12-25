@@ -13,6 +13,16 @@ class AutomaticPlayer(Player):
 
     def guess_location(self):
         while True:
+            x = random.randrange(0, 10, 2)
+            y = random.randrange(0, 10, 2)
+            if (x, y) not in self.selection_history:
+                self.selection_history.append((x, y))
+                return (x, y)
+            x = random.randrange(1, 10, 2)
+            y = random.randrange(1, 10, 2)
+            if (x, y) not in self.selection_history:
+                self.selection_history.append((x, y))
+                return (x, y)
             x = random.randint(0, 9)
             y = random.randint(0, 9)
             if (x, y) not in self.selection_history:
