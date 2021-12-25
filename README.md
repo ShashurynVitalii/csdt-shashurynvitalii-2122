@@ -10,11 +10,11 @@
 
 ## Description
 
-This project contains a code for so called Sea Battle game. It is designed as single player game.\
-Game is built mainly using **pygame** [package](https://www.pygame.org) for Python. As a player you\
-can place your ships and play againts computer oponent. Game is not ideally produced and has some \
-flaws (for example, in classic game you can sunk ship only if you hit all it's cells on the board, \
-but in this particular realization hitting only one single cell of the ship will cause it to sunk)\
+This project contains a code for so called Sea Battle game. It is designed as single player game.
+Game is built mainly using **pygame** [package](https://www.pygame.org) for Python. As a player you
+can place your ships and play againts computer oponent. Game is not ideally produced and has some
+flaws (for example, in classic game you can sunk ship only if you hit all it's cells on the board,
+but in this particular realization hitting only one single cell of the ship will cause it to sunk)
 
 ###### Controls
 
@@ -27,31 +27,31 @@ your turn click left mouse button one more time to let computer oponent perform 
 
 ## Instalation and run
 
-In order to run the game you firstly will need to install [Python](https://www.python.org/downloads/)\
-Project was build on Python 3.9, so you can just use the same. Also while installing Python make sure\
-that you checked boxes with **pip** instalation and addition Python to PATH. After that go to SeaBattleGame\
+In order to run the game you firstly will need to install [Python](https://www.python.org/downloads/).
+Project was build on Python 3.9, so you can just use the same. Also while installing Python make sure
+that you checked boxes with **pip** instalation and addition Python to PATH. After that go to SeaBattleGame
 directory. There you will see two important files:
 ```
 Pipfile
 Pipfile.lock
 ```
-Those two files contain all info about needed packages and dependencies. In order to use them first install\
+Those two files contain all info about needed packages and dependencies. In order to use them first install
 **pipenv** with `pip install pipenv` command, after that you need to use the following commands:
 ```
 pipenv shell
 pipenv install
 ```
-Those two commands will create a virtual environment to work with (very common practice in Python projects,\
-also you will need to run it every time you restart your terminal), and then install all packages and\
-dependencies listed in Pipfile and Pipfile.lock\
+Those two commands will create a virtual environment to work with (very common practice in Python projects,
+also you will need to run it every time you restart your terminal), and then install all packages and
+dependencies listed in Pipfile and Pipfile.lock
 
 After all that use the following command in order to run the game:
 ```
 python controller.py
 ```
 ###### Tests
-To run tests manually in SeaBattleGame folder run next command: `python -m unittest discover -v`. Test automation\
-was performed with **pre-commit** package, which uses git hooks. There is one custom hook to run tests, and several\
+To run tests manually in SeaBattleGame folder run next command: `python -m unittest discover -v`. Test automation
+was performed with **pre-commit** package, which uses git hooks. There is one custom hook to run tests, and several
 other hooks for code formatting (black, end-of-file-fixer, trailing-whitespace)
 
 ###### Version
