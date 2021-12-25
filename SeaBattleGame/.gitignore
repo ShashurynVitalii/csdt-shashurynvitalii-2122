@@ -14,4 +14,6 @@ venv.bak/
 
 GameResults.xml
 
+*.db
+
 *.sublime-workspace

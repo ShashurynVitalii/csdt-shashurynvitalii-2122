@@ -472,6 +472,8 @@ if __name__ == "__main__":
                                 f"{start.player1_score}",
                                 f"{start.player2_score}",
                             )
+                            db_create()
+                            db_insert(read_result_xml("GameResults.xml"))
                         pygame.draw.rect(
                             start.vboard, BLACK, pygame.Rect(960, 300, 40, 40)
                         )
@@ -510,6 +512,8 @@ if __name__ == "__main__":
                                 f"{start.player1_score}",
                                 f"{start.player2_score}",
                             )
+                            db_create()
+                            db_insert(read_result_xml("GameResults.xml"))
                         pygame.draw.rect(
                             start.vboard, BLACK, pygame.Rect(960, 300, 40, 40)
                         )

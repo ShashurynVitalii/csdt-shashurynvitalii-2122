@@ -1,5 +1,90 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
+import sqlite3
+
+
+def db_create():
+
+    """
+    This function is created to establish connection to SQLite DB
+    (create a new DB if there is none) and create 'leaderboard' table
+    in it (if it is not existing already)
+    """
+
+    try:
+        sqlite_connection = sqlite3.connect("leaderboard.db")
+        sqlite_create_table_query = """CREATE TABLE IF NOT EXISTS leaderboard (
+                                    id INTEGER PRIMARY KEY,
+                                    player_name TEXT NOT NULL,
+                                    date_time datetime NOT NULL,
+                                    game_time REAL NOT NULL,
+                                    guesses INT NOT NULL);"""
+
+        cursor = sqlite_connection.cursor()
+        print("'DB connected. DB/table operation started'")
+        cursor.execute(sqlite_create_table_query)
+        sqlite_connection.commit()
+
+        cursor.close()
+
+    except sqlite3.Error as error:
+        print("'Error:", error, "'")
+    finally:
+        if sqlite_connection:
+            sqlite_connection.close()
+            print("'Connection closed'")
+
+
+def db_insert(data: list):
+
+    """
+    This function created for performing
+    insertion into 'leaderboard' table with
+    a new game result record
+    """
+
+    try:
+        sqlite_connection = sqlite3.connect("leaderboard.db")
+        sqlite_create_table_query = f"""INSERT INTO leaderboard (
+                                    id, player_name, date_time,
+                                    game_time, guesses)
+                                    VALUES (
+                                    NULL, '{data[0]}', '{data[1]}',
+                                    {float(data[2])}, {int(data[3])})"""
+
+        cursor = sqlite_connection.cursor()
+        print("'DB connected. Insertion started'")
+        cursor.execute(sqlite_create_table_query)
+        sqlite_connection.commit()
+        print("'Insertion completed'")
+
+        cursor.close()
+
+    except sqlite3.Error as error:
+        print("'Connection/Insertion error:", error, "'")
+    finally:
+        if sqlite_connection:
+            sqlite_connection.close()
+            print("'Connection closed'")
+
+
+def read_result_xml(file_name):
+
+    """
+    Function for GameResults.xml reading using ElementTree
+    """
+
+    tree = ET.parse(file_name)
+    root = tree.getroot()
+
+    data = []
+
+    data.append(root[0].find("item[@name='winner']").text)
+    data.append(root[0].find("item[@name='date_time']").text)
+    data.append(root[0].find("item[@name='game_time']").text)
+    data.append(root[0].find("item[@name='guesses']").text)
+
+    return data
 
 
 def read_config_xml(file_name):
